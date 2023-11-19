@@ -1,0 +1,40 @@
+pip install python-telegram-bot
+
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+TOKEN = '6550401500:AAGCyKKq_WROZiNhaoWTLl0iy-gthDDW9G8'
+
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("Здравствуйте! Я ваш помощник в образовании, тренировках и выборе профессии. Чем могу помочь?")
+
+def education_help(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("Я могу помочь вам с учебой. Не стесняйтесь спрашивать!")
+
+# Function to handle career advice
+def career_advice(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("Я могу помочь вам с выбором вашей потенциальной карьеры. Дайте мне знать, что вам интересно!")
+
+# Function to handle fitness guidance
+def fitness_guidance(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("I can provide workout routines and diet suggestions. What are your fitness goals?")
+
+# Function to handle text messages
+def handle_text(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("Извините, я не понимаю вас. Если вам нужна помощь с учебой, тренировками или выбором карьеры, вы можете задавать вопросы")
+
+def main() -> None:
+    updater = Updater(TOKEN)
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("education", education_help))
+    dp.add_handler(CommandHandler("career", career_advice))
+    dp.add_handler(CommandHandler("fitness", fitness_guidance))
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
