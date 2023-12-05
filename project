@@ -3,7 +3,7 @@ import telebot
 from telebot import types
 
 # токен
-bot = telebot.TeleBot('6958533655:AAGNuzzTzbrRX6khRWAwZEn1dF8pe5qRscU')
+bot = telebot.TeleBot('6619270966:AAHOAGt1wN3jqzn7frMSC6OzH7PnK6sL9UU')
 
 
 # команда '/start'
