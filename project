@@ -1,35 +1,54 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+# подкючение библиотеки telebot
+import telebot
+from telebot import types
 
-TOKEN = '6550401500:AAGCyKKq_WROZiNhaoWTLl0iy-gthDDW9G8'
+# токен
+bot = telebot.TeleBot('6958533655:AAGNuzzTzbrRX6khRWAwZEn1dF8pe5qRscU')
 
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Здравствуйте! Я ваш помощник в образовании, тренировках и выборе профессии. Чем могу помочь?")
 
-def education_help(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Я могу помочь вам с учебой. Не стесняйтесь спрашивать!")
+# команда '/start'
+@bot.message_handler(commands=['start'])
+def start(message):
+    # создание кнопок
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    bt1 = types.InlineKeyboardButton(text='Начать работу', callback_data='btn1')
+    bt2 = types.InlineKeyboardButton(text='Закончить работу', callback_data='btn2')
+    kb.add(bt1, bt2)
+    # вывод сообщения с кнопками
+    bot.send_message(message.chat.id, f'Здравствуйте. Начать работу?', reply_markup=kb)
 
-def career_advice(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Я могу помочь вам с выбором вашей потенциальной карьеры. Дайте мне знать, что вам интересно!")
 
-def fitness_guidance(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("I can provide workout routines and diet suggestions. What are your fitness goals?")
+# отслеживание нажатия кнопок
+@bot.callback_query_handler(func=lambda callback: callback.data)
+def check_callback_data(callback):
+    if callback.data == 'btn1':
+        kb = types.InlineKeyboardMarkup(row_width=2)
 
-def handle_text(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text("Извините, я не понимаю вас. Если вам нужна помощь с учебой, тренировками или выбором карьеры, вы можете задавать вопросы")
+        kb.add(types.InlineKeyboardButton(text='Учеба', callback_data='btn3'),
+               types.InlineKeyboardButton(text='Тренировки', callback_data='btn4'))
 
-def main() -> None:
-    updater = Updater(TOKEN)
-    dp = updater.dispatcher
+        kb.add(types.InlineKeyboardButton(text='Карьера', callback_data='btn5'),
+               types.InlineKeyboardButton(text='Ещё', callback_data='btn6'))
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("education", education_help))
-    dp.add_handler(CommandHandler("career", career_advice))
-    dp.add_handler(CommandHandler("fitness", fitness_guidance))
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
+        bot.send_message(callback.message.chat.id, 'Выберите действие.', reply_markup=kb)
 
-    updater.start_polling()
-    updater.idle()
+    elif callback.data == 'btn2':
+        bot.send_message(callback.message.chat.id, 'До скорых встреч. Удачи!')
 
-if __name__ == '__main__':
-    main()
+    elif callback.data == 'btn3':
+        kb = types.InlineKeyboardMarkup(row_width=2)
+
+        kb.add(types.InlineKeyboardButton(text='Математика', callback_data='btn7'),
+               types.InlineKeyboardButton(text='Русский язык', callback_data='btn8'))
+
+        kb.add(types.InlineKeyboardButton(text='Информатика', callback_data='btn9'),
+               types.InlineKeyboardButton(text='Физика', callback_data='btn10'))
+
+        bot.send_message(callback.message.chat.id, 'Выберите предмет для изучения:', reply_markup=kb)
+
+    elif callback.data == 'btn8':
+        bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
+
+    elif callback.data == 'btn7':
+        bot.send_message(callback.message.chat.id, 'Перейдите по ссылке: \n https://vk.com/video-59108158_456240226')
+        bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
