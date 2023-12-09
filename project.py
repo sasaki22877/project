@@ -1,9 +1,10 @@
 # подкючение библиотеки telebot
 import telebot
 from telebot import types
+from config import *
 
 # токен
-bot = telebot.TeleBot('6619270966:AAHOAGt1wN3jqzn7frMSC6OzH7PnK6sL9UU')
+bot = telebot.TeleBot(f'{token}:{key}')
 
 
 # команда '/start'
