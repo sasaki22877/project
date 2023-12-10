@@ -24,9 +24,8 @@ def check_callback_data(callback):
         kb = types.InlineKeyboardMarkup(row_width=2)
 
         kb.add(types.InlineKeyboardButton(text='Учеба', callback_data='btn3'),
-               types.InlineKeyboardButton(text='Тренировки', callback_data='btn4'))
-
-        kb.add(types.InlineKeyboardButton(text='Карьера', callback_data='btn5'),
+               types.InlineKeyboardButton(text='Тренировки', callback_data='btn4'),
+               types.InlineKeyboardButton(text='Карьера', callback_data='btn5'),
                types.InlineKeyboardButton(text='Ещё', callback_data='btn6'))
 
         bot.send_message(callback.message.chat.id, 'Выберите действие.', reply_markup=kb)
@@ -38,33 +37,42 @@ def check_callback_data(callback):
         kb = types.InlineKeyboardMarkup(row_width=2)
 
         kb.add(types.InlineKeyboardButton(text='Математика', callback_data='btn7'),
-               types.InlineKeyboardButton(text='Русский язык', callback_data='btn8'))
-
-        kb.add(types.InlineKeyboardButton(text='Информатика', callback_data='btn9'),
+               types.InlineKeyboardButton(text='Русский язык', callback_data='btn8'),
+               types.InlineKeyboardButton(text='Информатика', callback_data='btn9'),
                types.InlineKeyboardButton(text='Физика', callback_data='btn10'))
 
         bot.send_message(callback.message.chat.id, 'Выберите предмет для изучения:', reply_markup=kb)
 
-    elif callback.data == 'btn8':
+    if callback.data == 'btn7': # Математика
+        bot.send_message(callback.message.chat.id, f'Перейдите по ссылке: {youtube_video}')
+        bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
+        
+    if callback.data == 'btn8':
         bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
 
-    elif callback.data == 'btn7':
-        bot.send_message('Перейдите по ссылке:', youtube_video)
-        bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
-
-    elif callback.data == 'btn9':
+    if callback.data == 'btn9': # Информатика
         bot.send_message(callback.message.chat.id, 'Пожалуйста, напишите ваш класс обучения в формате числа.')
-        def echo_all(message):
-            if message.text.lower() == '9':
-                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf1)
-            elif message.text.lower() == '10':
-                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf2)
-            elif message.text.lower() == '11':
-                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf3)
-    else:
-        bot.reply_to(callback.message.chat.id, "Извини, я не понимаю твоего сообщения.")
+        
+    @bot.message_handler(func=lambda message: True)  # Handler for any message
+    def echo_all(message):
+        if message.text == '9':
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_inf1}')
+        
+        elif message.text == '10':
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_inf2}')
+        
+        elif message.text == '11':
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_inf3}')
+        
+        else:
+            bot.send_message(callback.message.chat.id, "Извини, я не понимаю твоего сообщения.")
 
+    
+    if callback.data == 'btn10': # Физика
+        print('sdfdsfs')
 
-
-if __name__ == "__main__":
-    bot.polling(none_stop=True)
+try:
+    bot.infinity_polling()
+    # bot.polling(non_stop = True, interval = 0)
+except Exception as e:
+    pass
