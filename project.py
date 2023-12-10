@@ -4,7 +4,7 @@ from telebot import types
 from config import *
 
 # токен
-bot = telebot.TeleBot(f'{token}:{key}')
+bot = telebot.TeleBot(token)
 
 
 # команда '/start'
@@ -51,5 +51,9 @@ def check_callback_data(callback):
         bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
 
     elif callback.data == 'btn7':
-        bot.send_message(callback.message.chat.id, 'Перейдите по ссылке: \n https://vk.com/video-59108158_456240226')
+        bot.send_message(callback.message.chat.id, youtube_video)
         bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
+
+
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
