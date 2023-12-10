@@ -6,9 +6,6 @@ from config import *
 # токен
 bot = telebot.TeleBot(token)
 
-def start(update, context):
-    update.message.reply_text('Привет! Я бот. Чем могу помочь?')
-# команда '/start'
 @bot.message_handler(commands=['start'])
 def start(message):
     # создание кнопок
@@ -52,8 +49,21 @@ def check_callback_data(callback):
         bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
 
     elif callback.data == 'btn7':
-        bot.send_message(youtube_video)
+        bot.send_message('Перейдите по ссылке:', youtube_video)
         bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
+
+    elif callback.data == 'btn9':
+        bot.send_message(callback.message.chat.id, 'Пожалуйста, напишите ваш класс обучения в формате числа.')
+        def echo_all(message):
+            if message.text.lower() == '9':
+                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf1)
+            elif message.text.lower() == '10':
+                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf2)
+            elif message.text.lower() == '11':
+                    bot.reply_to(callback.message.chat.id, "Приятного обучения", youtube_inf3)
+    else:
+        bot.reply_to(callback.message.chat.id, "Извини, я не понимаю твоего сообщения.")
+
 
 
 if __name__ == "__main__":
