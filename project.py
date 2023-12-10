@@ -6,7 +6,8 @@ from config import *
 # токен
 bot = telebot.TeleBot(token)
 
-
+def start(update, context):
+    update.message.reply_text('Привет! Я бот. Чем могу помочь?')
 # команда '/start'
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -51,7 +52,7 @@ def check_callback_data(callback):
         bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
 
     elif callback.data == 'btn7':
-        bot.send_message(callback.message.chat.id, youtube_video)
+        bot.send_message(youtube_video)
         bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
 
 
