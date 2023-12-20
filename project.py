@@ -1,6 +1,7 @@
 # подкючение библиотеки telebot
 import telebot
 from telebot import types
+import requests
 from config import *
 
 # токен
@@ -75,16 +76,17 @@ def check_callback_data(callback):
         
         bot.send_message(callback.message.chat.id, 'Мы можем выслать вам файл с формулами по физике.')
 
-    def send_file(chat_id, file_path):
-        with open(file_path, 'rb') as file:
-            bot.send_document(chat_id, file)
-
-    # обработчик кнопки
     @bot.callback_query_handler(func=lambda call: call.data == 'btn11')
-    def handle_callback_query(callback):
-        chat_id = callback.message.chat.id  # куда нужно отправить файл
-        file_path = 'Новый/Пользователи/ryu8777/Загрузки/phys.pdf'  # Путь к файлу
-        send_file(chat_id, file_path)
+    def send_file_via_url(callback):
+        chat_id = callback.message.chat.id  # идентификатор чата, куда нужно отправить файл
+        file_url = 'blob:https://web.telegram.org/e5aa5639-2efa-42a2-850d-db48435ac625'  # URL файла
+        file_name = 'ФИЗИКА ФОРМУЛЫ'  # имя
+        with requests.get(file_url) as response: # загрузка на сервер
+            if response.status_code == 200:
+                file_data = response.content
+                bot.send_document(chat_id, data=file_data, filename=file_name) # отправка файла
+            else:
+                bot.send_message(chat_id, 'Не удалось загрузить файл.')
 
 
 
