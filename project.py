@@ -69,24 +69,29 @@ def check_callback_data(callback):
         else:
             bot.send_message(callback.message.chat.id, "Извини, я не понимаю твоего сообщения.")
     
-    if callback.data == 'btn10': # Физика
-        kb = types.InlineKeyboardMarkup(row_width=2)
-
-        kb.add(types.InlineKeyboardButton(text='Выслать', callback_data='btn11'))
+    if callback.data == 'btn10':
+        bot.send_message(callback.message.chat.id, 'Мы можем выслать вам файл с формулами по физике.', reply_markup=kb)
         
-        bot.send_message(callback.message.chat.id, 'Мы можем выслать вам файл с формулами по физике.')
-
+    @bot.callback_query_handler(func=lambda call: call.data == 'btn10')
+    def send_file_request(callback):
+        kb = telebot.types.InlineKeyboardMarkup()
+        kb.add(telebot.types.InlineKeyboardButton(text='Выслать', callback_data='btn11'))
+        
+    # обработчик кнопки 'btn11' для отправки файла
     @bot.callback_query_handler(func=lambda call: call.data == 'btn11')
     def send_file_via_url(callback):
-        chat_id = callback.message.chat.id  # идентификатор чата, куда нужно отправить файл
+        chat_id = callback.message.chat.id  # kуда нужно отправить файл
         file_url = 'blob:https://web.telegram.org/e5aa5639-2efa-42a2-850d-db48435ac625'  # URL файла
-        file_name = 'ФИЗИКА ФОРМУЛЫ'  # имя
-        with requests.get(file_url) as response: # загрузка на сервер
+        file_name = 'ФИЗИКА_ФОРМУЛЫ.pdf'  # имя файла
+
+        with requests.get(file_url) as response:
             if response.status_code == 200:
                 file_data = response.content
-                bot.send_document(chat_id, data=file_data, filename=file_name) # отправка файла
+
+                bot.send_document(chat_id, data=file_data, filename=file_name)
             else:
                 bot.send_message(chat_id, 'Не удалось загрузить файл.')
+
 
 
 
