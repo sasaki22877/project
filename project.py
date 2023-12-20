@@ -43,11 +43,12 @@ def check_callback_data(callback):
 
         bot.send_message(callback.message.chat.id, 'Выберите предмет для изучения:', reply_markup=kb)
 
+
     if callback.data == 'btn7': # Математика
         bot.send_message(callback.message.chat.id, f'Перейдите по ссылке: {youtube_video}')
         bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
         
-    if callback.data == 'btn8':
+    if callback.data == 'btn8': #Русский 
         bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
 
     if callback.data == 'btn9': # Информатика
@@ -66,10 +67,26 @@ def check_callback_data(callback):
         
         else:
             bot.send_message(callback.message.chat.id, "Извини, я не понимаю твоего сообщения.")
-
     
     if callback.data == 'btn10': # Физика
-        print('sdfdsfs')
+        kb = types.InlineKeyboardMarkup(row_width=2)
+
+        kb.add(types.InlineKeyboardButton(text='Выслать', callback_data='btn11'))
+        
+        bot.send_message(callback.message.chat.id, 'Мы можем выслать вам файл с формулами по физике.')
+
+    def send_file(chat_id, file_path):
+        with open(file_path, 'rb') as file:
+            bot.send_document(chat_id, file)
+
+    # обработчик кнопки
+    @bot.callback_query_handler(func=lambda call: call.data == 'btn11')
+    def handle_callback_query(callback):
+        chat_id = callback.message.chat.id  # куда нужно отправить файл
+        file_path = 'Новый/Пользователи/ryu8777/Загрузки/phys.pdf'  # Путь к файлу
+        send_file(chat_id, file_path)
+
+
 
 try:
     bot.infinity_polling()
