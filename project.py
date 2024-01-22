@@ -33,6 +33,26 @@ def check_callback_data(callback):
 
     elif callback.data == 'btn2':
         bot.send_message(callback.message.chat.id, 'До скорых встреч. Удачи!')
+    
+    elif callback.data == 'btn4':
+        bot.send_message(callback.message.chat.id, 'Вот несколько советов перед тренировкой: 1) Выполните разминку.  2) Запаситесь водой.  3) Не перетрудитесь. Удачи!')
+        bot.send_message(callback.message.chat.id, '_') #ВСТАВИТЬ ССЫЛКУ НА КАНАЛ С ТРЕНИРОВКАМИ (youtube) !!!
+ 
+    elif callback.data == 'dtn5':
+        bot.send_message(callback.message.chat.id, 'Я помогу вам выбрать профессию. Напишите 3 ваших личных качества.')
+        @bot.message_handler(func=lambda message: True)
+        def echo_all(message):
+            if message.text != '' :
+                bot.send_message(callback.message.chat.id, f'Отлично. Напишите, кем работают ваши родители.')
+
+        def echo_all(message):
+            if message.text != '' :
+                bot.send_message(callback.message.chat.id, f'Мне кажется, вам подходит профессия программиста! Стоит попробовать начать писать сайты.')
+
+
+    elif callback.data == 'btn6':
+        bot.send_message(callback.message.chat.id, 'Что вы ожидаете от этого проекта в будущем?')
+
 
     elif callback.data == 'btn3':
         kb = types.InlineKeyboardMarkup(row_width=2)
@@ -50,12 +70,27 @@ def check_callback_data(callback):
         bot.send_message(callback.message.chat.id, 'Удачи в изучении!')
         
     if callback.data == 'btn8': #Русский 
-        bot.send_message(callback.message.chat.id, 'Какую тему вы бы хотели пройти?')
+        bot.send_message(callback.message.chat.id, 'Какие части речи вы хотели бы изучить?')
+
+    @bot.message_handler(func=lambda message: True)  # ответ на сообщение РУС
+    def echo_all(message):
+        if message.text == 'существительные' or message.text == 'Существительные' or message.text == 'существительное' or message.text == 'Существительное' :
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru1}') #СДЕЛАТЬ ССЫЛКУ ЧЕРЕЗ ПЕРЕМЕННУЮ В CONFIG
+        
+        elif message.text == 'глаголы' or message.text == 'Глаголы' or message.text == 'глагол' or message.text == 'Глагол' :
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru2}') # !!!
+        
+        elif message.text == 'прилагательные' or message.text == 'Прилагательные' or message.text == 'прилагательное' or message.text == 'Прилагательное' :
+            bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru3}') # !!!
+        
+        else:
+            bot.send_message(callback.message.chat.id, "Начни изучение с главных частей речи.")
+    
 
     if callback.data == 'btn9': # Информатика
         bot.send_message(callback.message.chat.id, 'Пожалуйста, напишите ваш класс обучения в формате числа.')
         
-    @bot.message_handler(func=lambda message: True)  # Handler for any message
+    @bot.message_handler(func=lambda message: True)  # ответ на сообщение ИНФ
     def echo_all(message):
         if message.text == '9':
             bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_inf1}')
