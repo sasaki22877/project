@@ -83,8 +83,8 @@ def check_callback_data(callback):
         if message.text == 'прилагательные' or message.text == 'Прилагательные' or message.text == 'прилагательное' or message.text == 'Прилагательное' :
             bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru3}') # !!!
         
-        else:
-            bot.send_message(callback.message.chat.id, "Начни изучение с главных частей речи.")
+            else:
+                bot.send_message(callback.message.chat.id, "Начни изучение с главных частей речи.")
     
 
     if callback.data == 'btn9': # Информатика
