@@ -77,10 +77,10 @@ def check_callback_data(callback):
         if message.text == 'существительные' or message.text == 'Существительные' or message.text == 'существительное' or message.text == 'Существительное' :
             bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru1}') #СДЕЛАТЬ ССЫЛКУ ЧЕРЕЗ ПЕРЕМЕННУЮ В CONFIG
         
-        elif message.text == 'глаголы' or message.text == 'Глаголы' or message.text == 'глагол' or message.text == 'Глагол' :
+        if message.text == 'глаголы' or message.text == 'Глаголы' or message.text == 'глагол' or message.text == 'Глагол' :
             bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru2}') # !!!
         
-        elif message.text == 'прилагательные' or message.text == 'Прилагательные' or message.text == 'прилагательное' or message.text == 'Прилагательное' :
+        if message.text == 'прилагательные' or message.text == 'Прилагательные' or message.text == 'прилагательное' or message.text == 'Прилагательное' :
             bot.send_message(callback.message.chat.id, f'Приятного обучения {youtube_ru3}') # !!!
         
         else:
