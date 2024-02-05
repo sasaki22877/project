@@ -123,7 +123,7 @@ def check_callback_data(callback):
             if response.status_code == 200:
                 file_data = response.content
 
-                bot.send_document(chat_id, data=file_data, filename=file_name)
+                bot.send_document(message.chat.id, open(chat_id, data=file_data, filename=file_name))
             else:
                 bot.send_message(chat_id, 'Не удалось загрузить файл.')
 
